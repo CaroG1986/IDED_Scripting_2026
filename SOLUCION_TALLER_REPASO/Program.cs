@@ -117,12 +117,15 @@
             string numeroGanador = LeerNumero4Cifras("Ingrese el número ganador (4 cifras): ");
             int apuesta = LeerApuesta("Ingrese la apuesta: ");
 
-            int premio = CalcularPremio(numeroJugador, numeroGanador, apuesta);
-
-            if (premio > 0)
+            if (GanoSorteo(numeroJugador, numeroGanador))
+            {
+                int premio = CalcularPremio(numeroJugador, numeroGanador, apuesta);
                 Console.WriteLine("Ganó $" + premio);
+            }
             else
+            {
                 Console.WriteLine("No ganó premio");
+            }
         }
 
         // Lee y valida un número de 4 cifras
@@ -152,6 +155,12 @@
             return apuesta;
         }
         
+        // Determina si el jugador ganó algo
+        static bool GanoSorteo(string jugador, string ganador)
+        {
+            return CalcularPremio(jugador, ganador, 1) > 0;
+        }
+
         // Calcula el premio según las reglas
         static int CalcularPremio(string jugador, string ganador, int apuesta)
         {
