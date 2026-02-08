@@ -1,3 +1,5 @@
 Explicación: Ejercicios del Taller de repaso
 
 Ejercicio 1 
+
+Esta función actúa de la siguiente manera: primero necesita un número que sirva como un límite para el resultado, es por esto que se lo pide al usuario. Ya después inicia la serie de Fibonacci (función imprimirFibonacci()), la cual inicia con el 1 y el 0. La serie de Fibonacci consiste en una sucesión donde cada número se genera de la suma de los dos anteriores. Trás realizar esta sucesión debe verificarse cuales numeroso de esta son primos para así imprimir sólo este conjunto,  aquí se hace con un booleano que si regresa true significa que el número si se puede imprimir. Tanto la serie de Fibonacci y la comprobación de si es un número primo se hacen a través de ciclos For, para así poder repetir el proceso varias veces
