@@ -151,13 +151,7 @@
 
             return apuesta;
         }
-        /*
-        // Determina si el jugador ganó algo
-        static bool GanoSorteo(string jugador, string ganador)
-        {
-            return CalcularPremio(jugador, ganador, 1) > 0;
-        }
-        */
+        
         // Calcula el premio según las reglas
         static int CalcularPremio(string jugador, string ganador, int apuesta)
         {
