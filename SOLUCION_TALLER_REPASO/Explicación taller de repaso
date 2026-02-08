@@ -1,6 +1,6 @@
-Explicación: Ejercicios del Taller de repaso
+Explicación: Ejercicios del Taller de repaso 🦄🌸🦄
 
-Explicación 0
+Explicación 0 🦄
 
 El Código que se encuentra antes de la solución de los ejercicios lo puse principalmente para poder organizarlos y que todos estén en el mismo archivo de Visual Studio. 
 Entonces lo que tienen es writelines para dar las instrucciones para continuar y también llaman a las funciones de cada ejercicio
@@ -9,13 +9,13 @@ Por ejemplo:
 
  Console.WriteLine("Solución ejercicios\n");
 
- Ejercicio1(); → llama a la fubnción del ejercicio 1
+ Ejercicio1(); → llama a la función del ejercicio 1
  Console.WriteLine("\nPresione enter para el siguiente ejercicio");
  Console.ReadLine(); → Recibe la tecla enter
  Console.Clear(); → Limpia la pantalla para el siguiente ejercicio
 
 
-Ejercicio 1 
+Ejercicio 1 🦄
 
 Esta función actúa de la siguiente manera: primero necesita un número que sirva como límite para el resultado, es por esto que se lo pide al usuario. 
 
@@ -48,7 +48,8 @@ cada número se genera de la suma de los dos anteriores.
   }
 
 
-Trás realizar esta sucesión debe verificarse cuales numeroso de esta son primos para así imprimir sólo este conjunto,  aquí se hace con un booleano que si regresa true significa que el número si se puede imprimir. 
+Trás realizar esta sucesión debe verificarse cuales numeroso de esta son primos para así imprimir sólo este conjunto.  
+Aquí se hace con un booleano que si regresa true significa que el número si se puede imprimir. 
 
 static bool EsPrimo(long numero)
 {
@@ -77,4 +78,38 @@ for (int i = 1; i <= n; i++)→ repite hasta el n-ésimo término
         Console.Write(fib + " ");
     }
 }
+
+Ejercicio 2 🦄
+
+Para esta función hice lo siguiente: primero pedí que se ingresarán los segundos que se quería convertir en formato horario. 
+
+ static void Ejercicio2()
+ {
+     Console.WriteLine("Ingrese los segundos");
+     int n = int.Parse(Console.ReadLine());
+
+     Console.WriteLine(RegresarFormato(n)); → Llama a la función para cambiar el formato
+ }
+
+Después con una la función tipo string RegresarFormato (n) se verifica primero que el número ingresado sea positivo, tras esto se calculan las horas dividiendo el número dado por 3600; se calculan los minutos con el módulo de la división anterior, es decir, el residuo de n/3600, y dicho residuo lo divido entre 60; trás esto calcula los segundos con el residuo de la operación anterior. Finalmente, el string devuelve el formato "hora:minutos:segundos" Sin utilizar el date time.
+
+ static string RegresarFormato(int n)
+ {
+     int hora;
+     int minuto;
+     int segundo;
+
+     if (n < 0)
+     {
+         return "no es posible calcular la hora";
+     }
+     else
+     {
+         hora = n / 3600;
+         minuto = (n % 3600)/60;
+         segundo = (n % 3600)%60;
+
+         return $"{hora:D2}:{minuto:D2}:{segundo:D2}"; → el D2 es para que se vea mejor el formato
+     }
+ }
 
