@@ -14,30 +14,29 @@ Por ejemplo:
  Console.ReadLine(); → Recibe la tecla enter
  Console.Clear(); → Limpia la pantalla para el siguiente ejercicio
 
-
 Ejercicio 1 🦄
 
 Esta función actúa de la siguiente manera: primero necesita un número que sirva como límite para el resultado, es por esto que se lo pide al usuario. 
 
  Console.WriteLine("Ejercicio 1\n"); 
  Console.Write("Ingrese el número de términos: ");
- int n = int.Parse(Console.ReadLine());→ Transforma el string ingresado en el realine en un int
+ int n = int.Parse(Console.ReadLine()); → Transforma el string ingresado en el realine en un int
 
-Ya después inicia la serie de Fibonacci (función Fibonacci()), la cual inicia con el 1 y el 0. La serie de Fibonacci consiste en una sucesión donde 
+Ya después inicia la serie de Fibonacci (función Fibonacci ()), la cual inicia con el 1 y el 0. La serie de Fibonacci consiste en una sucesión donde 
 cada número se genera de la suma de los dos anteriores.
 
-  static long Fibonacci(int n)
+  static long Fibonacci (int n)
   {
       if (n == 1)  
           return 0; → si solo se ingresa el 1 se regresa un 0 ya que la serie inicia en 0
       if (n == 2)
-          return 1;→ si solo se ingresa el 2 se regresa un 1 ya que la serie inicia en 0
+          return 1; → si solo se ingresa el 2 se regresa un 1 ya que la serie inicia en 0
 
       long a = 0; → Números para iniciar la serie
-      long b = 1;→ Números para iniciar la serie
+      long b = 1; → Números para iniciar la serie
       long resultado = 0;
 
-      for (int i = 3; i <= n; i++)→ en este for se hace la operación para la serie
+      for (int i = 3; i <= n; i++) → en este for se hace la operación para la serie
       {
           resultado = a + b;
           a = b;
@@ -47,9 +46,8 @@ cada número se genera de la suma de los dos anteriores.
       return resultado;
   }
 
-
-Trás realizar esta sucesión debe verificarse cuales numeroso de esta son primos para así imprimir sólo este conjunto.  
-Aquí se hace con un booleano que si regresa true significa que el número si se puede imprimir. 
+Trás realizar esta sucesión debe verificarse cuales numeroso de esta son primos para así imprimir sólo este conjunto,
+aquí se hace con un booleano que si regresa true significa que el número si se puede imprimir. 
 
 static bool EsPrimo(long numero)
 {
@@ -59,17 +57,17 @@ static bool EsPrimo(long numero)
 
     for (long i = 2; i * i <= numero; i++)
     {
-        if (numero % i == 0)→ Revisa si tiene un divisor distinto de 1 y el mismo
-            return false;→ De ser así no se incluye
+        if (numero % i == 0) → Revisa si tiene un divisor distinto de 1 y el mismo
+            return false; → De ser así no se incluye
     }
-    return true;→ si no tiene más divisores se verá en el resultado
+    return true; → si no tiene más divisores se verá en el resultado
 }
 
 Finalmente era el Main se imprimen los números primos de la serie de fibonacci de esta manera:
 
 Console.WriteLine("\nNúmeros primos en la serie de Fibonacci:");
 
-for (int i = 1; i <= n; i++)→ repite hasta el n-ésimo término
+for (int i = 1; i <= n; i++) → repite hasta el n-ésimo término
 {
     long fib = Fibonacci(i);
 
@@ -91,7 +89,10 @@ Para esta función hice lo siguiente: primero pedí que se ingresarán los segun
      Console.WriteLine(RegresarFormato(n)); → Llama a la función para cambiar el formato
  }
 
-Después con una la función tipo string RegresarFormato (n) se verifica primero que el número ingresado sea positivo, tras esto se calculan las horas dividiendo el número dado por 3600; se calculan los minutos con el módulo de la división anterior, es decir, el residuo de n/3600, y dicho residuo lo divido entre 60; trás esto calcula los segundos con el residuo de la operación anterior. Finalmente, el string devuelve el formato "hora:minutos:segundos" Sin utilizar el date time.
+Después con una la función tipo string RegresarFormato (n) se verifica primero que el número ingresado sea positivo,
+tras esto se calculan las horas dividiendo el número dado por 3600; se calculan los minutos con el módulo de la división anterior,
+es decir, el residuo de n/3600, y dicho residuo lo divido entre 60; tras esto calcula los segundos con el residuo de la operación anterior.
+Finalmente, el string devuelve el formato "hora:minutos:segundos" Sin utilizar el date time.
 
  static string RegresarFormato(int n)
  {
@@ -114,3 +115,117 @@ Después con una la función tipo string RegresarFormato (n) se verifica primero
  }
 
 Ejercicio 3 🦄
+
+Para este código primero se pide los números necesarios, es decir, el número que va a jugar, el número ganador y la cantidad que va a apostar.
+
+string numeroJugador = LeerNumero4Cifras ("Ingrese su número (4 cifras): "); → Llama a la función LeerNumero4Cifras para asegurar que sea de 4 cifras
+string numeroGanador = LeerNumero4Cifras ("Ingrese el número ganador (4 cifras): "); → Llama a la función LeerNumero4Cifras para asegurar que sea de 4 cifras
+int apuesta = LeerApuesta("Ingrese la apuesta: "); → lee la apuesta
+
+Luego se crean las siguientes funciones con el fin de validar la apuesta. Primero está leernumero4cifras (string mensaje) la cual verifica que el número insertado sea de cuatro caracteres. 
+
+  static string LeerNumero4Cifras (string mensaje)
+  {
+      string numero;
+      do
+      {
+          Console.Write(mensaje);
+          numero = Console.ReadLine();
+      }
+      while (numero.Length != 4 || !numero.All(char.IsDigit));
+
+      return numero;
+  }
+
+Después está esa función que simplemente lee la apuesta.
+
+static int LeerApuesta(string mensaje)
+{
+    int apuesta;
+    do
+    {
+        Console.Write(mensaje);
+    }
+    while (!int.TryParse(Console.ReadLine(), out apuesta) || apuesta <= 0);
+
+    return apuesta;
+}
+
+La función de calcular el premio es de las más importantes ya que es la encargada de definir cuánto va a ganar el jugador dependiendo de qué número respondió y cuál fue la cantidad que apostó.
+
+ static int CalcularPremio(string jugador, string ganador, int apuesta)
+ {
+     // 4 cifras exactas en orden
+     if (jugador == ganador) → Que sean iguales
+         return apuesta * 4500;
+
+     // 4 cifras en desorden
+     if (CuatroCifrasDesorden(jugador, ganador)) → Necesita la función para verificar si están las mismas cifras, pero en desorden.
+         return apuesta * 200;
+
+     // Últimas 3 cifras en orden → revisa los últimos tres dígitos para verificar si son iguales en ambos casos.
+     if (jugador[1] == ganador[1] &&
+         jugador[2] == ganador[2] &&
+         jugador[3] == ganador[3])
+         return apuesta * 400;
+
+     // Últimas 2 cifras en orden→ revisa los últimos dos dígitos para verificar si son iguales en ambos casos.
+
+     if (jugador[2] == ganador[2] &&
+         jugador[3] == ganador[3])
+         return apuesta * 50;
+
+     // Última cifra
+     if (jugador[3] == ganador[3])→ revisa el último dígito para verificar si son iguales en ambos casos.
+
+         return apuesta * 5;
+
+     return 0; → si no gano nada devuelve 0
+ }
+
+También se usa otra función que se llama dentro de la función anterior, la cual tiene como fin verificar si las cuatro cifras que ingresó el jugador son las mismas del número ganador, 
+pero en un orden diferente. Para esto compara el primer número del jugador con todo lo del ganador y en el momento en el que uno sea igual le suma al contador, 
+cuando terminas con el primer dígito del número del jugador continúa con los demás y así hasta que compruebe los que sean iguales. 
+En el caso de que el contador sea igual a cuatro significa que si gano Solo que las cifras están en desorden.
+
+static bool CuatroCifrasDesorden(string a, string b)
+{
+    int contador = 0;
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (a[i] == b[j])
+            {
+                contador++;
+                break;
+            }
+        }
+    }
+
+    return contador == 4;
+}
+
+Por otro lado, se usa la función de ganador del sorteo para verificar con el cálculo del premio si el jugador si ganó. 
+Aquí sí el resultado del cálculo es mayor a cero significa que ganó, caso contrario perdió.
+
+static bool GanoSorteo(string jugador, string ganador)
+{
+    return CalcularPremio(jugador, ganador, 1) > 0;
+}
+
+Finalmente volvemos a la función inicial para imprimir sí ganó y qué cantidad ganó
+
+
+            if (GanoSorteo(numeroJugador, numeroGanador))
+            {
+                int premio = CalcularPremio(numeroJugador, numeroGanador, apuesta);
+                Console.WriteLine("Ganó $" + premio);
+            }
+            else
+            {
+                Console.WriteLine("No ganó premio");
+            }
+
+Ejercicio 4 🦄
