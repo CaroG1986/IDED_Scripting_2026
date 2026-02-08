@@ -293,7 +293,7 @@
         {
             public void Ejecutar()
             {
-                string mensaje = "Hola Mundo";
+                string mensaje = "Soy Pepe y me gusta el helado";
 
                 AbstractSample normal = new NormalMessage(mensaje);
                 AbstractSample invertidoCase = new CaseInvertedMessage(mensaje);
