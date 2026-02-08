@@ -98,7 +98,7 @@
 
             if (n < 0)
             {
-                return "no es posible calcualr la hora";
+                return "no es posible calcular la hora";
             }
             else
             {
