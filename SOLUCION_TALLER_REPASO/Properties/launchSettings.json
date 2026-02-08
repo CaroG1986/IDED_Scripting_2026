@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SOLUCION_TALLER_REPASO": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
