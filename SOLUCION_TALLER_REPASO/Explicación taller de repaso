@@ -229,3 +229,111 @@ Finalmente volvemos a la función inicial para imprimir sí ganó y qué cantida
             }
 
 Ejercicio 4 🦄
+
+Aquí primero se crea la clase abstracta que luego va a ser la clase base de otras subclases, en esta clase abstracta se declara un atributo privado el cual es el mensaje y también se declararon 2 métodos, uno abstracto que se usa para imprimir el mensaje y otro virtual qué invierte el mensaje.
+
+abstract class AbstractSample
+ {
+     // Atributo privado
+     private string message;
+
+     public AbstractSample(string message)
+     {
+         this.message = message;
+     }
+
+     protected string GetMessage()
+     {
+         return message;
+     }
+
+     // Método abstracto
+     public abstract void PrintMessage(string text);
+
+     // Método virtual que invierte el mensaje
+     public virtual string InvertMessage(string text)
+     {
+         char[] chars = text.ToCharArray();  Transforma el texto a un arreglo de caracteres
+         Array.Reverse(chars); Invierte el orden de los caracteres
+         return new string(chars);  devuelve los caracteres en su nuevo orden
+     }
+ Ahora pasamos a las subclases: de la clase original nacen 2 clases hijas. Esas 2 clases hijas son importantes ya que la clase base al ser abstracta no se puede instanciar. 
+Primero está la clase donde el mensaje se imprime de forma normal, es decir, tal cual estaba originalmente
+
+class NormalMessage : AbstractSample
+ {
+     public NormalMessage(string message) : base(message) { }
+
+     public override void PrintMessage(string text)
+     {
+         Console.WriteLine(text);
+     }
+ }
+
+Luego estará clase de mensaje invertido, La cual invierte las mayúsculas y las minúsculas.
+
+class CaseInvertedMessage : AbstractSample
+ {
+     public CaseInvertedMessage(string message) : base(message) { }
+
+     public override void PrintMessage(string text)
+     {
+         Console.WriteLine(InvertCase(text));  se llama el método que invierte mayúsculas y minúsculas
+     }
+
+     // Ahora SOLO invierte el texto (no cambia mayúsculas)
+     public override string InvertMessage(string text)  se llama el método que invierte el mansaje, el cual se encuentra en la case base
+     {
+         return base.InvertMessage(text);
+     }
+
+     private string InvertCase(string text) Aquí se invierten las mayúsculas y las minúsculas 
+     {
+         char[] result = new char[text.Length];
+
+         for (int i = 0; i < text.Length; i++)
+         {
+             if (char.IsUpper(text[i]))
+                 result[i] = char.ToLower(text[i]);
+             else if (char.IsLower(text[i]))
+                 result[i] = char.ToUpper(text[i]);
+             else
+                 result[i] = text[i];
+         }
+
+         return new string(result);
+     }
+ }
+
+Ahora tenemos una clase que se encarga de “manejar” las demás clases. Con esto me refiero a que contiene el mensaje que se va a utilizar, instancia 2 objetos uno que imprime normal y otro que, si imprime con las mayúsculas y minúsculas invertidas, Después llama a los métodos para imprimir los mensajes: primero el normal, segundo el que tiene mayúsculas y minúsculas invertidas, tercero es normal al revés y por último el que tiene mayúsculas y minúsculas invertidas al revés.
+class MessageManager
+ {
+     public void Ejecutar()
+     {
+         string mensaje = "Soy Pepe y me gusta el helado"; mensaje.
+
+         AbstractSample normal = new NormalMessage(mensaje); objeto de la clase normal
+         AbstractSample invertidoCase = new CaseInvertedMessage(mensaje); Objeto de la Clase con mayúsculas y minúsculas de invertidas
+
+         Console.WriteLine("Mensaje normal:");
+         normal.PrintMessage(mensaje); Método que imprime el mensaje
+
+         Console.WriteLine("\nMensaje normal con mayúsculas/minúsculas invertidas:");
+         invertidoCase.PrintMessage(mensaje); Método que imprime el mensaje
+
+         Console.WriteLine("\nMensaje invertido:");
+         normal.PrintMessage(normal.InvertMessage(mensaje)); Método que imprime el mensaje y método que lo invierte
+
+         Console.WriteLine("\nMensaje invertido + mayúsculas/minúsculas invertidas:");
+         invertidoCase.PrintMessage(invertidoCase.InvertMessage(mensaje)); Método que imprime el mensaje y método que lo invierte
+     }
+ }
+
+Por último, en la clase principal se instancia un objeto de tipo manager y Se llama al método interno de este llamado ejecutar, qué se encarga de todo lo descrito anteriormente. Y también está el readkey() para que no se cierre la consola de inmediato.
+
+static void Ejercicio4()
+ {
+     MessageManager manager = new MessageManager();
+     manager.Ejecutar();
+     Console.ReadKey();
+ }
